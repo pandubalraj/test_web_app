@@ -1,0 +1,27 @@
+hi,
+this is the test page
+<br/>
+
+
+<span id="schedule_country">
+<%=select_tag "country", options_for_select(Country.all.collect{|x| [x.name,x.id]}), {:size => "5",:style=>"width:200px"} %>
+</span>
+
+<span id='country_cities_list'>
+<%=render :partial=>'cities_list'%>
+</span>
+
+<script>
+$('#schedule_country').change(function() { 
+  var country = $('#schedule_country :selected').text();
+  var country_id = $('#schedule_country :selected').val();
+  $.ajax(
+	{
+	type:"POST",
+        url: "/cities_list",
+        data: { name: country, id: country_id},
+        }); 
+
+});
+</script>
+

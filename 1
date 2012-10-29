@@ -1,0 +1,30 @@
+hi,
+this is the test page
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<span id="schedule_country">
+<%=select_tag "country", options_for_select(Country.all.collect{|x| [x.name,x.id]}), {:size => 5} %>
+</span>
+<span id="cities_list">
+<select name="cities" size="5" >
+<option style="width:60px"></option>
+</select>
+</span>
+
+<script>
+$('#schedule_country').change(function() { 
+  var country = $('#schedule_country :selected').text();
+  var country_id = $('#schedule_country :selected').val();
+  $.ajax(
+                {
+                    type:"POST",
+                    url: "/cities_list",
+                    data: { name: country, id: country_id},
+                    success: function(html)
+                    {
+                        $("#functions").html(html)
+                    }
+                }); //end of A
+
+});
+</script>
+
